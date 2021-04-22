@@ -46,7 +46,7 @@ $(function () {
 
                     `
 
-                $('#table_append').append(html);
+                $('#table_append').html(html);
             },
             cache: false,
             contentType: false,
