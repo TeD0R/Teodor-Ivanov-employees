@@ -71,6 +71,29 @@ public class EmployeeService implements com.example.demo.services.interfaces.Emp
 
     }
 
+    public List<Map<String, Integer>> getFinalResult() {
+        List<Map<String, Integer>> result = new ArrayList<>();
+        var sortedMapHours = getMostWorkedProject();
+
+        for (var entry : sortedMapHours.entrySet()) {
+            Map<String, Integer> projectMap = new HashMap<>();
+            var projectEmployees = projectsMap.get(entry.getKey());
+
+            projectMap.put("project_id", entry.getKey());
+            projectMap.put("days", entry.getValue());
+
+            for (int i = 0; i < projectEmployees.size(); i++) {
+                String key = "employee_" + i;
+                projectMap.put(key, projectEmployees.get(i).getId());
+            }
+            result.add(projectMap);
+        }
+
+        System.out.println(result);
+
+        return result;
+    }
+
     public Map<Integer, Integer> getMostWorkedProject() {
         Map<Integer, Integer> projectsMapHours = new HashMap<>();
 
@@ -79,11 +102,13 @@ public class EmployeeService implements com.example.demo.services.interfaces.Emp
 //            var result = employeeList.stream().filter(byProjectId).collect(Collectors.toList());
 
             var projectList = projectsMap.get(employee.getProjectId());
+
             int sum_hours = 0;
-            for (int i = 0; i < projectList.size(); i++) {
-                sum_hours += projectList.get(i).getHours();
+            for (Employee value : projectList) {
+                sum_hours += value.getHours();
             }
             projectsMapHours.put(employee.getProjectId(), sum_hours);
+
         }
 
         LinkedHashMap<Integer, Integer> reverseSortedProjects = new LinkedHashMap<>();
@@ -94,13 +119,6 @@ public class EmployeeService implements com.example.demo.services.interfaces.Emp
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .forEachOrdered(x -> reverseSortedProjects.put(x.getKey(), x.getValue()));
 
-
-        System.out.println(reverseSortedProjects);
-
-        return projectsMapHours;
-    }
-
-    public List<Employee> getEmployeeList() {
-        return new ArrayList<>(employeeList);
+        return reverseSortedProjects;
     }
 }

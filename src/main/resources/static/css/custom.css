@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,300);
+
 body, html {
     font-family: "Lato", sans-serif;
     width: 100%;
@@ -14,7 +15,7 @@ main {
     align-items: center;
     background-color: #bf7a6b;
     background-image: -webkit-linear-gradient(bottom left, #bf7a6b 0%, #e6d8a7 100%);
-    background-image: linear-gradient(to top right,#bf7a6b 0%, #e6d8a7 100%);
+    background-image: linear-gradient(to top right, #bf7a6b 0%, #e6d8a7 100%);
 }
 
 .container {
@@ -32,6 +33,7 @@ main {
     width: 100%;
     height: 60px;
 }
+
 .file-upload-wrapper:after {
     content: attr(data-text);
     font-size: 18px;
@@ -50,6 +52,7 @@ main {
     border-radius: 5px 10px 10px 5px;
     font-weight: 300;
 }
+
 .file-upload-wrapper:before {
     content: "Upload";
     position: absolute;
@@ -68,9 +71,11 @@ main {
     pointer-events: none;
     border-radius: 0 5px 5px 0;
 }
+
 .file-upload-wrapper:hover:before {
     background: #3d8c63;
 }
+
 .file-upload-wrapper input {
     opacity: 0;
     position: absolute;

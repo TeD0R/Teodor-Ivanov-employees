@@ -11,14 +11,14 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 @Controller
 public class EmployeeController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     @Autowired
     public EmployeeController(EmployeeService employeeService) {
@@ -32,24 +32,19 @@ public class EmployeeController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/readFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public Map<String, String> readFile(@RequestPart("file") MultipartFile file) {
-        Map<String, String> json = new HashMap<String, String>();
-
+    public List<Map<String, Integer>> readFile(@RequestPart("file") MultipartFile file) {
 
         try {
             InputStream inputStream = file.getInputStream();
             new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
                     .lines()
-                    .forEach(line -> employeeService.handleLine(line));
+                    .forEach(employeeService::handleLine);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        var projects_ordered = employeeService.getMostWorkedProject();
-
-        return json;
+        return employeeService.getFinalResult();
     }
-
 
 
 }
