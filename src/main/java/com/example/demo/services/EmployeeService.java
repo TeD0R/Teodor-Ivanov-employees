@@ -103,11 +103,11 @@ public class EmployeeService implements com.example.demo.services.interfaces.Emp
 
             var projectList = projectsMap.get(employee.getProjectId());
 
-            int sum_hours = 0;
+            int sumDays = 0;
             for (Employee value : projectList) {
-                sum_hours += value.getHours();
+                sumDays += value.getDays();
             }
-            projectsMapHours.put(employee.getProjectId(), sum_hours);
+            projectsMapHours.put(employee.getProjectId(), sumDays);
 
         }
 
